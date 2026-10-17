@@ -1,0 +1,802 @@
+/* forumviewer theme – restyles the vBulletin 4 / jQuery Mobile 1.0 mobile skin of forumla.de
+   to look like the XenForo 2 mobile style (oyle-community.de), in a dark theme only. */
+:root {
+  color-scheme: dark;
+  --bg: #121417;
+  --card: #1b1e22;
+  --text: #e3e6ea;
+  --muted: #8d949c;
+  --muted2: #b0b6bd;
+  --link: #64aee6;
+  --header: #0f3652;
+  --header-text: #bcdef5;
+  --header-hover: rgba(255, 255, 255, .1);
+  --cat-a: #1a2733;
+  --cat-b: #1e2c39;
+  --sep: #2a2f35;
+  --border: #353b42;
+  --border-top: #2a2f35;
+  --border-bottom: #0c0d0f;
+  --userbg: #202429;
+  --quote-bg: #23272c;
+  --quote-title-bg: #272c32;
+  --orange: #f2930d;
+  --btn: #2f8fd6;
+  --btn-border: #2a7fbf;
+  --btn-text: #ffffff;
+  --btn2-text: #8cc4ee;
+  --pn-a: #1e2c39;
+  --pn-b: #22303d;
+  --pn-cur-bg: #3a2c17;
+  --pn-cur-border: #8a5f22;
+  --pn-cur-text: #f5b55a;
+  --footer: #0b2639;
+  --footer-text: #edf6fd;
+  --input-bg: #15181b;
+  --toolbar: #23272c;
+}
+
+/* ---------- base ---------- */
+html, body, .ui-mobile-viewport, .ui-page, .ui-content, .ui-body-a, .ui-body-b, .ui-body-c, .ui-body-d, .ui-body-e {
+  background: var(--bg) !important;
+  background-image: none !important;
+  color: var(--text) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", sans-serif !important;
+  text-shadow: none !important;
+}
+body { font-size: 15px !important; line-height: 1.4 !important; -webkit-tap-highlight-color: transparent; }
+* { text-shadow: none !important; box-shadow: none !important; }
+a, a:visited, .ui-link, .ui-body-d a.ui-link { color: var(--link) !important; text-decoration: none !important; }
+.ui-link-inherit, .ui-link-inherit:visited { color: inherit !important; }
+.ui-content { padding: 10px 10px 20px !important; }
+img { max-width: 100%; height: auto; }
+
+/* header first, breadcrumb above the page title (XenForo order) */
+.ui-page { display: flex !important; flex-direction: column; }
+.ui-page > * { flex-shrink: 0; }
+#header { order: -3; }
+#navbar { order: -2; }
+.ui-page > .pagetitle { order: -1; }
+
+/* ---------- header (XenForo p-nav bar) ---------- */
+#header {
+  position: sticky; top: 0; z-index: 1000;
+  display: flex !important; align-items: center;
+  height: 50px; padding: 0 4px !important; margin: 0 !important;
+  background: var(--header) !important; background-image: none !important; border: 0 !important;
+}
+#header-left, #header-right { float: none !important; display: flex; align-items: center; height: 100%; margin: 0 !important; padding: 0 !important; }
+#header-left { order: 1; flex: 0 1 auto; min-width: 0; }
+#header-left img { height: 22px !important; width: auto !important; display: block; }
+#header-left a { display: flex; align-items: center; padding: 0 6px; }
+
+/* forumla.de wordmark, redrawn as text (forumla.js replaces the 136x40 logo image).
+   Michroma (SIL Open Font License), subset to the logo's letters, embedded so it works offline. */
+@font-face {
+  font-family: "FaLogo"; font-style: normal; font-weight: 400; font-display: block;
+  src: url("data:font/woff2;base64,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") format("woff2");
+}
+#header-left a.logo-image { padding: 0 8px 0 4px !important; text-decoration: none !important; }
+.fa-logo { display: flex; flex-direction: column; justify-content: center; line-height: 1; }
+.fa-logo-word {
+  font-family: "FaLogo", "Arial Black", sans-serif; font-size: 17px; letter-spacing: .3px; white-space: nowrap;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f4f7 46%, #b5c0cb 54%, #e6ebf0 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent !important;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, .55));
+}
+.fa-logo-tld {
+  background: linear-gradient(180deg, #d4e2ee 0%, #9fbad2 55%, #85a6c3 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent !important;
+}
+/* the tagline is laid out at a readable size and scaled down to the wordmark's width */
+.fa-logo-tag {
+  font-family: "FaLogo", sans-serif; font-size: 8px; letter-spacing: .2px; white-space: nowrap; color: rgba(236, 242, 248, .82) !important;
+  width: 0; height: 5px; margin-top: 3px; overflow: visible; transform: scale(var(--fa-tag-scale, .58)); transform-origin: 0 0;
+}
+#header-right { order: 2; flex: 1 1 auto; justify-content: flex-end; display: contents !important; }
+#header .headericon, #header .headericon:visited {
+  display: flex !important; align-items: center; justify-content: center;
+  height: 37px; min-width: 37px; padding: 0 10px; margin: 0 !important; border-radius: 4px;
+  color: var(--header-text) !important; font-size: 15px; order: 3;
+}
+.headericon:active { background: var(--header-hover); }
+.headericon img { width: 22px !important; height: 22px !important; margin: 0 !important; }
+/* menu becomes the hamburger on the left */
+#header .headericon[href*="do=gridmenu"] { order: 0; padding: 0 8px; }
+/* logged in there is no "Anmelden" link: push the remaining icons to the right */
+#header .headericon[href*="search.php"] { margin-left: auto !important; }
+#header .headericon[href*="do=login"] ~ .headericon[href*="search.php"] { margin-left: 0 !important; }
+.headericon[href*="do=gridmenu"] img, .headericon[href*="search.php"] img, .headericon[href*="do=login"] img { display: none !important; }
+.headericon[href*="do=gridmenu"]::before, .headericon[href*="search.php"]::before {
+  content: ""; display: block; width: 22px; height: 22px; background: var(--header-text);
+  -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat;
+}
+.headericon[href*="do=gridmenu"]::before {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 5h18v2.4H3zm0 5.8h18v2.4H3zm0 5.8h18V19H3z'/%3E%3C/svg%3E");
+  width: 26px; height: 26px;
+}
+.headericon[href*="search.php"]::before {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5 21 21'/%3E%3C/svg%3E");
+}
+#header .headericon[href*="do=login"] { margin-left: auto !important; }
+.headericon[href*="do=login"]::after { content: "Anmelden"; }
+
+/* ---------- breadcrumb: "‹ Parent" like XenForo mobile ---------- */
+#navbar, .navbar { background: transparent !important; margin: 0 !important; padding: 8px 10px 0 !important; border: 0 !important; }
+#navbar:not(:has(li.navbit)) { display: none !important; }
+#navbar .breadcrumb, .navbar ul.breadcrumb {
+  display: block !important; margin: 0 !important; position: static !important; width: auto !important; height: auto !important;
+}
+#navbar ul.breadcrumb > li { display: none !important; }
+#navbar ul.breadcrumb > li.navbit:last-child {
+  display: block !important; background: transparent !important; border: 0 !important; padding: 0 !important; margin: 0 !important; min-height: 0 !important;
+}
+#navbar ul.breadcrumb > li .ui-btn-inner { padding: 0 !important; margin: 0 !important; border: 0 !important; background: transparent !important; min-height: 0 !important; }
+#navbar ul.breadcrumb > li .ui-btn-text { padding: 0 !important; overflow: visible !important; }
+#navbar ul.breadcrumb > li a {
+  color: var(--link) !important; font-size: 12px !important; font-weight: 700 !important; display: inline-flex; align-items: center; gap: 8px;
+}
+#navbar ul.breadcrumb > li a::before { content: "‹"; font-size: 17px; font-weight: 400; color: var(--muted); line-height: 1; }
+#navbar .breadcrumb .ui-icon { display: none !important; }
+.breadcrumboverlay, #main-nav { display: none !important; }
+
+/* ---------- page title ---------- */
+.pagetitle, .pagetitle.ui-bar-b {
+  display: block !important; padding: 4px 10px 6px !important; margin: 0 !important;
+  background: transparent !important; background-image: none !important; border: 0 !important; color: var(--text) !important;
+}
+.pagetitle .backbutton, .pagetitle > a:has(.backbutton), .pagetitle p.description { display: none !important; }
+h1.pagetitle, .pagetitle h1, .pagetitle h2, .pagetitle .ui-title {
+  font-size: 20px !important; font-weight: 400 !important; line-height: 1.4 !important; color: var(--text) !important;
+  margin: 0 !important; padding: 0 !important; white-space: normal !important; text-align: left !important;
+}
+
+/* ---------- listviews: full-width blocks ---------- */
+.ui-listview { margin: 0 !important; }
+.ui-content .ui-listview, .ui-listview-inset { margin: 0 -10px 20px !important; }
+.ui-li, .ui-btn-up-d, .ui-btn-up-c, .ui-btn-hover-d, .ui-btn-down-d, .ui-btn-hover-c, .ui-btn-down-c {
+  background: var(--card) !important; background-image: none !important;
+  color: var(--text) !important; border-color: var(--sep) !important;
+}
+.ui-btn-down-d, .ui-btn-down-c { background: var(--userbg) !important; }
+ul.ui-listview > li.ui-li {
+  border: 0 !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important; min-height: 0 !important;
+}
+ul.ui-listview > li.ui-li:not(.ui-li-divider) + li.ui-li:not(.ui-li-divider) { border-top: 1px solid var(--sep) !important; }
+ul.ui-listview > li.ui-li .ui-btn-inner {
+  border: 0 !important; margin: 0 !important; min-height: 0 !important; padding: 10px 70px 10px 52px !important;
+}
+ul.ui-listview > li.ui-li:not(.ui-li-has-icon):not(.ui-li-has-thumb) .ui-btn-inner { padding-left: 10px !important; }
+ul.ui-listview > li.ui-li:not(.ui-li-has-count) .ui-btn-inner { padding-right: 10px !important; }
+ul.ui-listview > li.ui-li .ui-btn-text { padding: 0 !important; }
+ul.ui-listview .ui-li-heading, ul.ui-listview h3 { min-height: 0 !important; }
+
+/* category header = XenForo block-header */
+.ui-li-divider, ul.ui-listview > li.ui-li-divider {
+  background: linear-gradient(0deg, var(--cat-a), var(--cat-b)) !important;
+  border: 0 !important; border-bottom: 1px solid var(--sep) !important;
+  padding: 6px 10px !important; margin: 0 !important; color: var(--link) !important;
+}
+ul.ui-listview > li.ui-li + li.ui-li-divider { margin-top: 20px !important; border-top: 1px solid var(--border-top) !important; }
+.ui-li-divider .ui-li-heading, .ui-li-divider h3 {
+  font-size: 20px !important; font-weight: 400 !important; line-height: 1.4 !important; color: var(--link) !important; margin: 0 !important; white-space: normal !important;
+}
+.ui-li-divider .ui-li-desc, .ui-li-divider p { font-size: 13px !important; color: var(--muted2) !important; white-space: normal !important; margin: 0 !important; line-height: 1.4 !important; }
+
+/* nodes */
+.ui-li-heading { font-size: 17px !important; font-weight: 700 !important; line-height: 1.4 !important; white-space: normal !important; margin: 0 !important; color: var(--link) !important; }
+.ui-li-heading a { color: var(--link) !important; }
+.ui-li-desc { font-size: 13px !important; color: var(--muted2) !important; white-space: normal !important; line-height: 1.4 !important; margin: 2px 0 0 !important; }
+.ui-li-desc a { color: var(--link) !important; }
+.ui-li-count {
+  background: transparent !important; background-image: none !important; border: 0 !important;
+  color: var(--muted) !important; font-size: 13px !important; font-weight: 400 !important; padding: 0 !important;
+  right: 12px !important; top: 50% !important; margin-top: -9px !important;
+}
+.ui-li-has-arrow .ui-li-count { right: 12px !important; }
+.ui-li-count::before {
+  content: ""; display: inline-block; width: 13px; height: 13px; margin-right: 4px; vertical-align: -2px; background: var(--muted);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+ul.ui-listview .ui-icon-arrow-r { display: none !important; }
+
+/* forum icons: XenForo-like outlined bubbles, filled when there are new posts */
+ul.ui-listview > li.ui-li img.forumicon, ul.ui-listview > li.ui-li .ui-li-icon {
+  left: 12px !important; top: 12px !important; transform: none; margin: 0 !important;
+}
+ul.ui-listview > li.subforum img.forumicon { width: 22px !important; height: 22px !important; left: 32px !important; top: 10px !important; }
+img.forumicon {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%23a6c8e3' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M5 5h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-9l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z'/%3E%3Cpath d='M23 10h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2v4l-5-4h-6a2 2 0 0 1-2-2v-1'/%3E%3C/svg%3E");
+  width: 30px !important; height: 30px !important; max-width: none !important;
+}
+img.forumicon[src*="_new"] {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' stroke='%232577b1' stroke-width='2' stroke-linejoin='round'%3E%3Cpath fill='%2347a7eb' d='M5 5h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-9l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z'/%3E%3Cpath fill='none' d='M23 10h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2v4l-5-4h-6a2 2 0 0 1-2-2v-1'/%3E%3C/svg%3E");
+}
+ul.ui-listview > li.subforum .ui-btn-inner { padding-left: 64px !important; padding-top: 8px !important; padding-bottom: 8px !important; }
+li.subforum .ui-li-heading { font-size: 15px !important; }
+
+/* rows with a profile picture (friends tab, member lists): jQuery Mobile puts an 80px thumbnail
+   absolutely at the left, which the 52px icon padding above doesn't clear. Use a 40px round
+   avatar and start the text next to it. */
+ul.ui-listview > li.ui-li.ui-li-has-thumb > .ui-btn-inner,
+ul.ui-listview > li.ui-li.ui-li-has-thumb:not(.ui-btn) { padding-left: 62px !important; min-height: 44px !important; }
+ul.ui-listview > li.ui-li.ui-li-has-thumb .ui-li-thumb, ul.ui-listview > li.ui-li.ui-li-has-thumb > img:first-child {
+  position: absolute !important; left: 10px !important; top: 50% !important; transform: translateY(-50%);
+  width: 40px !important; height: 40px !important; max-width: none !important; max-height: none !important;
+  margin: 0 !important; border-radius: 50%; object-fit: cover;
+}
+ul.ui-listview > li.ui-li.ui-li-has-thumb .ui-li-heading { font-size: 15px !important; }
+
+/* rows with a selection checkbox on the left (private messages, inline moderation) */
+ul.ui-listview > li.ui-li.ui-li-checkboxradio:not(.ui-li-has-icon):not(.ui-li-has-thumb) > .ui-btn-inner { padding-left: 46px !important; }
+ul.ui-listview > li.ui-li-checkboxradio > .ui-checkbox {
+  position: absolute !important; left: 0 !important; top: 0 !important; bottom: 0 !important; width: 46px !important; margin: 0 !important; z-index: 1;
+}
+ul.ui-listview > li.ui-li-checkboxradio > .ui-checkbox label.ui-btn {
+  position: absolute !important; inset: 0 !important; width: auto !important; height: auto !important; margin: 0 !important;
+  background: transparent !important; border: 0 !important; border-radius: 0 !important; min-height: 0 !important;
+}
+ul.ui-listview > li.ui-li-checkboxradio > .ui-checkbox label .ui-btn-inner { padding: 0 !important; height: 100%; }
+ul.ui-listview > li.ui-li-checkboxradio > .ui-checkbox .ui-icon { left: 14px !important; top: 50% !important; }
+
+/* thread list (XenForo structItem) */
+li.threadbit .ui-li-heading { font-size: 15px !important; font-weight: 700 !important; line-height: 1.35 !important; }
+li.threadbit .ui-li-heading .prefix {
+  display: inline-block; font-size: 12px !important; font-weight: 400 !important; line-height: 1.3;
+  background: var(--pn-cur-bg); color: var(--pn-cur-text) !important; border: 1px solid var(--pn-cur-border);
+  border-radius: 4px; padding: 0 5px; margin: 0 4px 2px 0; vertical-align: 1px;
+}
+li.threadbit .ui-li-heading img { vertical-align: middle; opacity: .6; }
+li.threadbit .threadstatus { left: 14px !important; }
+li.threadbit .ui-li-desc { font-size: 12px !important; color: var(--muted) !important; }
+li.threadbit .ui-li-desc strong { font-weight: 400; }
+/* "jump to newest post" (thread URL + /new): a narrow icon column on the right of each thread */
+ul.ui-listview > li.ui-li-has-alt > .ui-btn-inner { padding-right: 104px !important; }
+ul.ui-listview > li.ui-li-has-alt:not(.ui-li-has-count) > .ui-btn-inner { padding-right: 54px !important; }
+ul.ui-listview > li.ui-li-has-alt .ui-li-count { right: 56px !important; }
+ul.ui-listview > li.ui-li-has-alt > a.ui-li-link-alt {
+  display: block !important; position: absolute !important; top: 0 !important; right: 0 !important; bottom: 0 !important;
+  width: 46px !important; height: auto !important; margin: 0 !important; min-height: 0 !important;
+  background: transparent !important; border: 0 !important; border-left: 1px solid var(--sep) !important; border-radius: 0 !important;
+}
+ul.ui-listview > li.ui-li-has-alt > a.ui-li-link-alt:active { background: var(--userbg) !important; }
+ul.ui-listview > li.ui-li-has-alt > a.ui-li-link-alt > * { display: none !important; }
+ul.ui-listview > li.ui-li-has-alt > a.ui-li-link-alt::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 20px; height: 20px; background: var(--link);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v13m-6-6 6 6 6-6M5 21h14'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- collapsibles ("Unterforen") ---------- */
+.ui-collapsible { margin: 0 -10px 20px !important; }
+.ui-collapsible-heading { margin: 0 !important; font-size: 15px !important; }
+.ui-collapsible-heading .ui-btn, .ui-collapsible-heading .ui-btn-inner {
+  background: linear-gradient(0deg, var(--cat-a), var(--cat-b)) !important; color: var(--link) !important;
+  border: 0 !important; border-radius: 0 !important; margin: 0 !important;
+}
+.ui-collapsible-heading .ui-btn { border-top: 1px solid var(--border-top) !important; border-bottom: 1px solid var(--sep) !important; }
+.ui-collapsible-heading .ui-btn .ui-btn-inner { padding: 8px 10px 8px 36px !important; }
+.ui-collapsible-heading .ui-btn-text { font-size: 17px !important; font-weight: 400 !important; color: var(--link) !important; }
+.ui-collapsible-heading .ui-icon { left: 10px !important; display: block !important; }
+.ui-collapsible-content { background: transparent !important; border: 0 !important; padding: 0 !important; }
+.ui-collapsible-content .ui-listview { margin: 0 !important; }
+
+/* ---------- buttons ---------- */
+.ui-btn:not(.ui-li), a[data-role=button], .ui-btn-up-a, .ui-btn-up-b, .ui-btn-up-e {
+  background: linear-gradient(0deg, var(--pn-a), var(--pn-b)) !important; color: var(--btn2-text) !important;
+  border: 1px solid var(--border) !important; border-bottom-color: var(--border-bottom) !important; border-radius: 4px !important; min-height: 0;
+}
+.ui-btn:not(.ui-li) .ui-btn-inner { border: 0 !important; padding: 7px 12px !important; }
+.ui-btn:not(.ui-li) .ui-btn-text { font-weight: 400 !important; font-size: 14px !important; color: var(--btn2-text) !important; }
+/* primary buttons: "Antworten", submit */
+.modbuttongroup .ui-btn:first-child, .ui-btn:has(> button[type=submit]), .ui-btn:has(> input[type=submit]) {
+  background: var(--btn) !important; border: 1px solid var(--btn-border) !important; color: var(--btn-text) !important;
+}
+.modbuttongroup .ui-btn:first-child .ui-btn-text, .ui-btn:has(> button[type=submit]) .ui-btn-text, .ui-btn:has(> input[type=submit]) .ui-btn-text {
+  color: var(--btn-text) !important;
+}
+.modbuttongroup .ui-btn:first-child .ui-btn-text::before {
+  content: ""; display: inline-block; width: 13px; height: 13px; margin-right: 6px; vertical-align: -1px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ui-btn:has(> button[type=submit]), .ui-btn:has(> input[type=submit]) { margin: 12px 0 !important; }
+/* "Vorschau" is a secondary button */
+.ui-btn:has(> button[name=preview]), .ui-btn:has(> input[name=preview]) {
+  background: linear-gradient(0deg, var(--pn-a), var(--pn-b)) !important; border: 1px solid var(--border) !important; border-bottom-color: var(--border-bottom) !important;
+}
+.ui-btn:has(> button[name=preview]) .ui-btn-text, .ui-btn:has(> input[name=preview]) .ui-btn-text { color: var(--btn2-text) !important; }
+fieldset.ui-grid-a { display: flex; gap: 8px; }
+fieldset.ui-grid-a > .ui-block-a, fieldset.ui-grid-a > .ui-block-b { flex: 1; width: auto !important; float: none !important; }
+/* horizontal button groups ("Antworten", "Thema erstellen") */
+.modbuttongroup, .ui-controlgroup-horizontal { margin: 0 0 10px !important; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.modbuttongroup .ui-btn, .ui-controlgroup-horizontal .ui-btn { margin: 0 !important; border-radius: 4px !important; }
+.modbuttongroup .ui-btn .ui-icon, .ui-controlgroup-horizontal .ui-btn .ui-icon { display: none !important; }
+.modbuttongroup .ui-btn .ui-btn-inner, .ui-controlgroup-horizontal .ui-btn .ui-btn-inner { padding-left: 12px !important; }
+/* icon-only buttons (private messages: MV = move, DL = delete) */
+.modbuttongroup .ui-btn-icon-notext, .ui-controlgroup-horizontal .ui-btn-icon-notext { width: 38px; }
+.modbuttongroup .ui-btn-icon-notext .ui-btn-inner, .ui-controlgroup-horizontal .ui-btn-icon-notext .ui-btn-inner { padding: 0 !important; height: 100%; min-height: 34px; }
+.modbuttongroup .ui-btn-icon-notext .ui-btn-inner::before, .ui-controlgroup-horizontal .ui-btn-icon-notext .ui-btn-inner::before {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 17px; height: 17px; background: var(--btn2-text);
+  -webkit-mask: var(--icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='5' cy='12' r='1'/%3E%3Ccircle cx='12' cy='12' r='1'/%3E%3Ccircle cx='19' cy='12' r='1'/%3E%3C/svg%3E")) center / contain no-repeat;
+}
+.ui-btn-icon-notext[title="MV"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'/%3E%3Cpath d='M10 13h6m-2-2 2 2-2 2'/%3E%3C/svg%3E");
+}
+.ui-btn-icon-notext[href*="subscription.php"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'/%3E%3Cpath d='M13.7 21a2 2 0 0 1-3.4 0'/%3E%3C/svg%3E");
+}
+.ui-btn-icon-notext:has(> button[name="moderate"]) {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3C/svg%3E");
+}
+.ui-btn-icon-notext[title="DL"] {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6'/%3E%3C/svg%3E");
+}
+/* vertical option groups (reply settings): label above, plain rows */
+.ui-controlgroup-vertical { margin: 0 0 12px !important; width: 100% !important; }
+.ui-controlgroup-vertical .ui-controlgroup-label {
+  float: none !important; width: auto !important; display: block; margin: 0 0 4px !important; font-size: 13px; color: var(--muted2) !important;
+}
+.ui-controlgroup-vertical .ui-controlgroup-controls { float: none !important; width: 100% !important; }
+.ui-controlgroup-vertical .ui-controlgroup-controls > li { list-style: none; }
+.ui-field-contain .ui-controlgroup-vertical .ui-btn {
+  margin: 0 !important; border-radius: 0 !important; border: 0 !important; background: transparent !important;
+}
+.ui-field-contain .ui-controlgroup-vertical .ui-select .ui-btn {
+  border: 1px solid var(--border) !important; border-radius: 4px !important; background: var(--input-bg) !important; margin: 4px 0 0 !important;
+}
+.ui-field-contain .ui-controlgroup-vertical .ui-btn-text { color: var(--text) !important; font-size: 15px !important; white-space: normal !important; }
+
+/* ---------- page navigation (XenForo pageNav) ---------- */
+/* jQuery Mobile's vbpagenav: absolutely positioned arrows + a clipped strip of page numbers.
+   Give the strip room for full 34px boxes, gaps, and native sideways scrolling. */
+.pagenav { position: relative !important; height: 40px !important; margin: 6px 0 10px !important; }
+.pagenav .ui-btn {
+  min-height: 0 !important; border-radius: 4px !important; box-sizing: border-box !important;
+  background: linear-gradient(0deg, var(--pn-a), var(--pn-b)) !important; border: 1px solid var(--border) !important; border-bottom-color: var(--border-bottom) !important;
+}
+.pagenav .ui-vbpagenav-pagenumbers {
+  position: absolute !important; top: 0 !important; bottom: 0 !important; left: 40px !important; right: 40px !important;
+  width: auto !important; height: 40px !important; display: flex !important; align-items: center; gap: 4px;
+  overflow-x: auto !important; overflow-y: hidden !important; scrollbar-width: none; padding: 0 1px !important;
+}
+.pagenav .ui-vbpagenav-pagenumbers::-webkit-scrollbar { display: none; }
+.pagenav .ui-vbpagenav-pagenumber {
+  flex: 0 0 auto; height: 34px !important; min-width: 34px !important; width: auto !important; margin: 0 !important;
+  display: flex !important; align-items: center; justify-content: center; float: none !important; position: relative !important;
+}
+.pagenav .ui-vbpagenav-pagenumber .ui-btn-inner { padding: 0 9px !important; border: 0 !important; }
+.pagenav .ui-vbpagenav-pagenumber .ui-icon { display: none !important; }
+.pagenav .ui-vbpagenav-pagenumber .ui-btn-text { position: static !important; width: auto !important; height: auto !important; clip: auto !important; }
+.pagenav .ui-vbpagenav-first, .pagenav .ui-vbpagenav-last {
+  position: absolute !important; top: 3px !important; width: 34px !important; height: 34px !important; margin: 0 !important;
+}
+.pagenav .ui-vbpagenav-first { left: 0 !important; right: auto !important; }
+.pagenav .ui-vbpagenav-last { right: 0 !important; left: auto !important; }
+.pagenav .ui-vbpagenav-first .ui-btn-inner, .pagenav .ui-vbpagenav-last .ui-btn-inner { display: none !important; }
+.pagenav .ui-vbpagenav-first::after, .pagenav .ui-vbpagenav-last::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; background: var(--link);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m11 17-5-5 5-5M18 17l-5-5 5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.pagenav .ui-vbpagenav-last::after { transform: scaleX(-1); }
+.pagenav .ui-btn .ui-btn-text { font-size: 13px !important; color: var(--link) !important; overflow: visible !important; text-overflow: clip !important; }
+.pagenav .ui-btn-up-e, .pagenav .ui-btn-active {
+  background: var(--pn-cur-bg) !important; border-color: var(--pn-cur-border) !important;
+}
+.pagenav .ui-btn-up-e .ui-btn-text, .pagenav .ui-btn-active .ui-btn-text { color: var(--pn-cur-text) !important; }
+
+/* ---------- posts (XenForo message) ---------- */
+ol#posts, ol.posts { list-style: none !important; margin: 0 -10px !important; padding: 0 !important; border: 0 !important; }
+li.postbit, li.postcontainer {
+  background: var(--card) !important; border: 0 !important; border-top: 1px solid var(--border-top) !important; border-bottom: 1px solid var(--border-bottom) !important;
+  border-radius: 0 !important; margin: 0 0 10px !important; padding: 0 !important; list-style: none !important;
+}
+.posthead, .posthead.ui-bar-c {
+  display: flex !important; align-items: center; gap: 0 10px; flex-wrap: wrap;
+  background: var(--userbg) !important; background-image: none !important; border: 0 !important;
+  border-bottom: 1px solid var(--border) !important; padding: 10px !important; color: var(--text) !important;
+  height: auto !important; min-height: 0 !important; position: relative;
+}
+.posthead .postuseravatarlink, .posthead .postuseravatarlink p { margin: 0 !important; padding: 0 !important; float: none !important; }
+.posthead .postuseravatarlink { position: relative; display: block; flex: 0 0 48px; }
+.posthead .postuseravatarlink img {
+  width: 48px !important; height: 48px !important; max-width: none; object-fit: cover; border-radius: 50% !important; display: block; border: 0 !important;
+}
+.posthead .postuseravatarlink p:empty::before {
+  content: ""; display: block; width: 48px; height: 48px; border-radius: 50%; background: var(--card);
+}
+/* letter avatar for users without a picture (forumla.js) */
+.fa-letter {
+  display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%;
+  font: 400 29px/1 "Segoe UI", "Helvetica Neue", Helvetica, Roboto, sans-serif; user-select: none;
+}
+/* green dot for users who are online ("<name> ist online" in the link title) */
+.posthead .postuseravatarlink[title$="ist online"]::after {
+  content: ""; position: absolute; right: -1px; bottom: 1px; width: 11px; height: 11px; border-radius: 50%;
+  background: #63b265; border: 2px solid var(--userbg);
+}
+/* font-size 0 hides the trailing ":" after the name */
+.posthead .xsaid { font-weight: 700 !important; font-size: 0 !important; float: none !important; color: var(--text) !important; flex: 1; min-width: 0; }
+.posthead .xsaid a { color: var(--link) !important; font-size: 15px !important; }
+/* the date is moved into the body by forumla.js; this is the fallback position */
+.posthead .postdate { margin-left: auto !important; float: none !important; color: var(--muted) !important; font-size: 12px !important; }
+/* XenForo arrow pointing from the body up to the user */
+.posthead::after {
+  content: ""; position: absolute; left: 22px; bottom: -1px; width: 0; height: 0;
+  border: 12px solid transparent; border-bottom-color: var(--border); border-top: 0;
+}
+.posthead::before {
+  content: ""; position: absolute; left: 23px; bottom: -1px; width: 0; height: 0; z-index: 1;
+  border: 11px solid transparent; border-bottom-color: var(--card); border-top: 0;
+}
+.postbody, .postrow, .postbody .content { background: transparent !important; padding: 0 !important; margin: 0 !important; border: 0 !important; }
+/* attribution line: date left, "#n" and the moderation checkbox right (forumla.js) */
+.fa-attribution {
+  display: flex; justify-content: space-between; align-items: center; min-height: 22px;
+  margin: 10px 10px 0; padding-bottom: 3px; border-bottom: 1px solid var(--sep);
+  color: var(--muted); font-size: 12px; line-height: 1.5;
+}
+.fa-attribution .postdate, .fa-attribution .postdate a { color: var(--muted) !important; margin: 0 !important; font-size: 12px !important; }
+.fa-attribution-right { display: flex; align-items: center; gap: 8px; }
+.fa-attribution .fa-postnum { color: var(--muted) !important; font-size: 12px; }
+.fa-attribution .inlinemodcheckboxradio { position: relative !important; width: 20px; height: 20px; margin: 0 !important; }
+.fa-attribution .inlinemodcheckboxradio label.ui-btn {
+  position: absolute !important; inset: 0 !important; margin: 0 !important; background: transparent !important; border: 0 !important; min-height: 0 !important;
+}
+.fa-attribution .inlinemodcheckboxradio .ui-btn-inner { padding: 0 !important; height: 100%; }
+.fa-attribution .inlinemodcheckboxradio .ui-icon { left: 1px !important; width: 16px !important; height: 16px !important; margin-top: -8px !important; }
+.fa-attribution .inlinemodcheckboxradio input { position: absolute; opacity: 0; }
+
+/* XenForo action bar: "Melden", "Bearbeiten" left; "Antworten" right */
+li.postbit .postfoot {
+  display: flex !important; flex-wrap: wrap; align-items: center; gap: 2px 16px; padding: 4px 10px 8px !important;
+}
+li.postbit .postfoot > span { display: contents; }
+li.postbit .postfoot a {
+  background: none !important; width: auto !important; height: auto !important; padding: 4px 0 !important; margin: 0 !important;
+  color: var(--muted) !important; font-size: 13px !important; display: inline-flex !important; align-items: center; gap: 5px;
+}
+/* vBulletin's icon-only links: hide the &nbsp; text, draw icon + label */
+li.postbit .postfoot a:is(.report, .editpost, .forwardpost, .newreply, .quickreply, .multiquote) { font-size: 0 !important; }
+li.postbit .postfoot a img { display: none !important; }
+li.postbit .postfoot a:is(.report, .editpost, .forwardpost, .newreply)::before {
+  content: ""; width: 14px; height: 14px; background: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat;
+}
+li.postbit .postfoot a::after { font-size: 13px; }
+/* Pinnwand: "[Melden] [Bearbeiten]" text links, drop the brackets */
+li.postbit .postfoot .userprof_postbititem { font-size: 0; }
+li.postbit .postfoot a.report {
+  order: 1; --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 22V4s1-1 4-1 5 2 8 2 4-1 4-1v11s-1 1-4 1-5-2-8-2-4 1-4 1'/%3E%3C/svg%3E");
+}
+li.postbit .postfoot a.report::after { content: "Melden"; }
+li.postbit .postfoot a.editpost {
+  order: 2; --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z'/%3E%3C/svg%3E");
+}
+li.postbit .postfoot a.editpost::after { content: "Bearbeiten"; }
+li.postbit .postfoot a.forwardpost {
+  order: 3; --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m15 17 5-5-5-5'/%3E%3Cpath d='M4 18v-2a4 4 0 0 1 4-4h12'/%3E%3C/svg%3E");
+}
+li.postbit .postfoot a.forwardpost::after { content: "Weiterleiten"; }
+/* reply without quote and multi-quote are duplicates of "Antworten" on mobile */
+li.postbit .postfoot a.quickreply:not(.newreply), li.postbit .postfoot a.multiquote { display: none !important; }
+li.postbit .postfoot a.newreply {
+  order: 10; margin-left: auto !important; color: var(--link) !important;
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z'/%3E%3C/svg%3E");
+}
+li.postbit .postfoot a.newreply::after { content: "Antworten"; }
+li.postbit .postfoot:not(:has(a)) { display: none !important; }
+
+/* real quick reply under the last post: vBulletin's hidden #quick_reply form, shown by forumla.js */
+#qr_defaultcontainer.fa-qr-live {
+  display: block !important; margin: 0 -10px 10px !important; padding: 10px !important; background: var(--card) !important;
+  border: 0 !important; border-top: 1px solid var(--border-top) !important; border-bottom: 1px solid var(--border-bottom) !important;
+}
+.fa-qr-live form#quick_reply { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; }
+.fa-qr-live form#quick_reply > .ui-field-contain {
+  flex: 1 1 100%; margin: 0 !important; padding: 0 !important; border: 0 !important; background: transparent !important;
+}
+.fa-qr-live label[for="message"] { display: none !important; }
+.fa-qr-live .fa-editor { margin: 0 !important; }
+.fa-qr-live form#quick_reply > .ui-btn { margin: 0 !important; display: inline-block !important; }
+.fa-qr-live form#quick_reply > fieldset.ui-grid-a { display: inline-flex; margin: 0 !important; border: 0; padding: 0; }
+.fa-qr-live fieldset.ui-grid-a > .ui-block-a .ui-btn { margin: 0 !important; }
+.fa-qr-live fieldset.ui-grid-a > .ui-block-a .ui-icon { display: none !important; }
+.fa-qr-live fieldset.ui-grid-a > .ui-block-a .ui-btn .ui-btn-inner { padding-left: 12px !important; }
+.fa-qr-live fieldset.ui-grid-a > .ui-block-b { display: none !important; } /* "Abbrechen" */
+.fa-qr-live .ui-btn .ui-btn-inner { padding: 7px 14px !important; }
+
+/* "Schreibe eine Antwort …" placeholder when there is no quick-reply form (forumla.js) */
+a.fa-qr {
+  display: block !important; margin: 0 -10px 10px; padding: 10px; background: var(--card);
+  border-top: 1px solid var(--border-top); border-bottom: 1px solid var(--border-bottom); color: var(--muted) !important;
+}
+.fa-qr-editor { display: block; border: 1px solid var(--border); border-radius: 4px; background: var(--input-bg); overflow: hidden; }
+.fa-qr-toolbar {
+  display: flex; gap: 18px; padding: 9px 14px; background: var(--toolbar); border-bottom: 1px solid var(--border);
+  color: var(--muted2); font: 600 14px/1 "Segoe UI", Roboto, sans-serif;
+}
+.fa-qr-toolbar i { font-family: Georgia, serif; }
+.fa-qr-placeholder { display: block; padding: 12px 10px 34px; font-size: 15px; color: var(--muted); }
+.fa-qr-btn {
+  display: inline-block; margin-top: 8px; padding: 7px 14px; border-radius: 4px; font-size: 14px;
+  background: var(--btn); border: 1px solid var(--btn-border); color: var(--btn-text);
+}
+blockquote.postcontent {
+  margin: 0 !important; padding: 10px !important; font-size: 15px !important; line-height: 1.5 !important;
+  color: var(--text) !important; overflow-wrap: anywhere; word-break: break-word;
+}
+blockquote.postcontent img, blockquote.postcontent iframe, blockquote.postcontent video { max-width: 100% !important; height: auto; }
+blockquote.postcontent iframe { aspect-ratio: 16 / 9; width: 100% !important; height: auto !important; }
+blockquote.postcontent img[src*="smilies"], blockquote.postcontent img.inlineimg { vertical-align: middle; }
+.postbit .after_content, .postbit .signature {
+  background: transparent !important; border: 0 !important; color: var(--muted) !important; font-size: 13px !important; padding: 0 10px 8px !important;
+}
+/* XenForo signature: thin rule, smaller muted text, images kept small */
+.postbit .signature {
+  border-top: 1px solid var(--sep) !important; padding: 8px 0 0 !important; margin: 0 10px 6px !important;
+  font-size: 12px !important; line-height: 1.4 !important; max-height: 140px; overflow: hidden;
+}
+.postbit .signature img { max-height: 90px !important; width: auto !important; }
+.postbit .signature br:first-child { display: none; }
+
+/* text colors chosen by posters ([COLOR] -> <font color>, inline styles) are made for a
+   white background and often unreadable on dark, so all posted text is shown in the normal text color.
+   Links keep the link color; quote headers and YouTube cards keep their own styling. */
+:is(blockquote.postcontent, .postbit .signature, .fa-pm-msg-body)
+  *:not(a, a *, .bbcode_postedby, .bbcode_postedby *, .fa-yt, .fa-yt *) {
+  color: var(--text) !important;
+}
+:is(blockquote.postcontent, .postbit .signature, .fa-pm-msg-body) a * { color: inherit !important; }
+
+/* private message history: one box per earlier message, newest first (forumla.js) */
+.fa-pm-history { margin: 0 10px 10px; padding-top: 8px; border-top: 1px solid var(--sep); }
+.fa-pm-history-head {
+  font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 8px;
+}
+.fa-pm-msg {
+  background: var(--quote-bg); border: 1px solid var(--sep); border-left: 3px solid var(--fa-author, var(--link));
+  border-radius: 4px; margin: 0 0 8px; overflow: hidden;
+}
+.fa-pm-msg-head {
+  display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: var(--quote-title-bg);
+  border-bottom: 1px solid var(--sep); font-size: 13px; font-weight: 700; color: var(--text);
+}
+.fa-pm-msg-head .fa-letter { width: 22px; height: 22px; font-size: 12px; flex: 0 0 22px; }
+.fa-pm-msg-body { padding: 8px 10px; font-size: 14.5px; line-height: 1.5; color: var(--text); overflow-wrap: anywhere; }
+.fa-pm-msg-body img { max-width: 100%; height: auto; }
+.postbit .signature { color: var(--text) !important; }
+
+/* quotes & code (XenForo bbCodeBlock) */
+.bbcode_container { margin: 0 0 8px !important; }
+.bbcode_quote, .quote_container, .quote_container.ui-body-e {
+  background: var(--quote-bg) !important; background-image: none !important; color: var(--text) !important; border-radius: 0 !important;
+}
+.bbcode_quote { border: 0 !important; border-top: 1px solid var(--sep) !important; border-bottom: 1px solid var(--sep) !important; border-left: 3px solid var(--orange) !important; }
+.quote_container { border: 0 !important; padding: 0 10px 8px !important; font-size: 15px !important; }
+.bbcode_postedby {
+  display: block; background: var(--quote-title-bg); color: var(--orange) !important; font-size: 13px !important;
+  padding: 6px 10px !important; margin: 0 -10px 8px !important;
+}
+.bbcode_postedby strong, .bbcode_postedby a { color: var(--orange) !important; }
+.bbcode_postedby img { display: none; }
+.quote_container:not(:has(.bbcode_postedby)) { padding-top: 8px !important; }
+.bbcode_description { color: var(--orange) !important; font-size: 13px !important; background: var(--quote-title-bg); padding: 6px 10px; margin: 0 !important; }
+pre, code, .bbcode_code {
+  background: var(--quote-bg) !important; color: var(--text) !important; border: 0 !important; border-left: 3px solid var(--link) !important; border-radius: 0 !important;
+  font-family: Monaco, Menlo, Consolas, "Roboto Mono", monospace !important; font-size: 13px !important;
+  overflow-x: auto !important; max-width: 100%; white-space: pre !important; padding: 10px !important; height: auto !important; max-height: 60vh;
+}
+
+/* ---------- forms ---------- */
+input[type=text], input[type=password], input[type=email], input[type=search], input[type=number], textarea, select, input.ui-input-text {
+  background: var(--input-bg) !important; background-image: none !important; color: var(--text) !important;
+  border: 1px solid var(--border) !important; border-radius: 4px !important;
+  font-size: 16px !important; padding: 7px 8px !important; width: 100% !important; box-sizing: border-box !important; margin: 0 0 4px !important;
+}
+input:focus, textarea:focus, select:focus { outline: 0 !important; border-color: var(--btn) !important; background: var(--card) !important; }
+label, .ui-field-contain label { color: var(--text) !important; font-size: 15px !important; font-weight: 400 !important; }
+label.ui-input-text { background: none !important; border: 0 !important; padding: 8px 0 3px !important; width: auto !important; display: block; }
+.ui-field-contain {
+  border: 0 !important; padding: 10px !important; margin: 0 -10px !important; background: var(--card) !important;
+  border-top: 1px solid var(--border-top) !important; border-bottom: 1px solid var(--border-bottom) !important;
+}
+.ui-checkbox .ui-btn, .ui-radio .ui-btn { border-radius: 4px !important; background: var(--card) !important; }
+.ui-checkbox .ui-btn .ui-btn-inner, .ui-radio .ui-btn .ui-btn-inner { padding: 8px 8px 8px 34px !important; }
+.ui-checkbox .ui-btn-text, .ui-radio .ui-btn-text { color: var(--text) !important; font-weight: 400 !important; }
+/* XenForo-style check boxes instead of the jQuery Mobile sprites */
+.ui-checkbox .ui-btn .ui-icon, .ui-radio .ui-btn .ui-icon {
+  display: block !important; left: 6px !important; width: 18px !important; height: 18px !important; margin-top: -9px !important;
+  background: var(--input-bg) !important; border: 1px solid var(--border-bottom) !important; border-radius: 3px !important;
+}
+.ui-radio .ui-btn .ui-icon { border-radius: 50% !important; }
+.ui-checkbox .ui-btn .ui-icon-checkbox-on, .ui-radio .ui-btn .ui-icon-radio-on {
+  background: var(--btn) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E") center / 14px no-repeat !important;
+  border-color: var(--btn-border) !important;
+}
+.ui-checkbox acronym { border-bottom: 0 !important; }
+h3.ui-bar { background: linear-gradient(0deg, var(--cat-a), var(--cat-b)) !important; color: var(--link) !important; font-size: 17px !important; font-weight: 400 !important; padding: 6px 10px !important; margin: 0 -10px !important; border: 0 !important; }
+form.vbform > ol, form.vbform > p { background: var(--card); margin: 0 -10px !important; padding: 10px 10px 10px 30px !important; font-size: 13px; color: var(--muted2); }
+form.vbform > p { padding-left: 10px !important; }
+
+/* ---------- editor (XenForo/Froala look) ---------- */
+.fa-editor {
+  border: 1px solid var(--border); border-radius: 4px; background: var(--input-bg); overflow: hidden; margin: 6px 0 4px;
+}
+.fa-editor:focus-within { border-color: var(--btn); }
+.fa-toolbar {
+  display: flex; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+  background: var(--toolbar); border-bottom: 1px solid var(--border); padding: 0 2px;
+}
+.fa-toolbar::-webkit-scrollbar { display: none; }
+.fa-toolbar button {
+  flex: 0 0 auto; width: 38px; height: 38px; margin: 2px 0; padding: 0; border: 0; border-radius: 4px; background: transparent;
+  color: var(--muted2); font: 600 15px/1 "Segoe UI", Roboto, sans-serif; display: flex; align-items: center; justify-content: center;
+}
+.fa-toolbar button:active { background: var(--border); }
+.fa-toolbar button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fa-toolbar .fa-sep { flex: 0 0 1px; background: var(--border); margin: 9px 3px; }
+/* Size follows the screen: a start height relative to the viewport (clamped for tiny phones and
+   big tablets), then forumla.js grows it with the text up to 60% of the visible area. The viewport
+   shrinks while the keyboard is open (adjustResize), so the limits adapt to that too. */
+.fa-editor { --fa-ta-min: clamp(150px, 34vh, 420px); scroll-margin: 60px 0 12px; }
+.fa-qr-live .fa-editor, form[action*="do=insertpm"] .fa-editor { --fa-ta-min: clamp(84px, 15vh, 220px); }
+.fa-editor textarea {
+  display: block; width: 100% !important; box-sizing: border-box !important;
+  border: 0 !important; border-radius: 0 !important; margin: 0 !important; background: transparent !important;
+  min-height: var(--fa-ta-min) !important; max-height: 60vh; overflow-y: auto;
+  padding: 10px !important; font-size: 16px !important; line-height: 1.5 !important; resize: none;
+}
+
+/* "Ähnliche Themen" under a thread: XenForo block with structItem-like rows */
+#similar_threads { margin: 0 0 20px !important; padding: 0 !important; background: transparent !important; border: 0 !important; }
+#similar_threads > h4, #similar_threads > h4.ui-bar-c {
+  margin: 0 !important; padding: 6px 10px !important; font-size: 17px !important; font-weight: 400 !important; line-height: 1.4 !important;
+  background: linear-gradient(0deg, var(--cat-a), var(--cat-b)) !important; color: var(--link) !important;
+  border: 0 !important; border-top: 1px solid var(--border-top) !important; border-bottom: 1px solid var(--sep) !important;
+}
+#similar_threads_list {
+  background: var(--card) !important; background-image: none !important; border: 0 !important; border-bottom: 1px solid var(--border-bottom) !important;
+  margin: 0 !important; padding: 0 !important; color: var(--text) !important;
+}
+#similar_threads ol.similar_threads { list-style: none !important; margin: 0 !important; padding: 0 !important; }
+#similar_threads ol.similar_threads > li {
+  display: flex !important; gap: 10px; align-items: flex-start; padding: 8px 10px !important; margin: 0 !important;
+  background: transparent !important; border: 0 !important; float: none !important; width: auto !important;
+}
+#similar_threads ol.similar_threads > li + li { border-top: 1px solid var(--sep) !important; }
+#similar_threads .titleblock { flex: 1; min-width: 0; float: none !important; width: auto !important; padding: 0 !important; }
+#similar_threads h6 { margin: 0 !important; font-size: 15px !important; font-weight: 700 !important; line-height: 1.35 !important; }
+#similar_threads h6 a { color: var(--link) !important; }
+#similar_threads .starter_forum, #similar_threads .dateblock {
+  color: var(--muted) !important; font-size: 12px !important; line-height: 1.4 !important; background: transparent !important;
+}
+#similar_threads .dateblock { flex: 0 0 auto; text-align: right; float: none !important; width: auto !important; padding: 0 !important; }
+#similar_threads .dateblock .starter_forum { margin: 0 !important; }
+#similar_threads .shade, #similar_threads .time { color: var(--muted) !important; }
+
+/* "Aktuelle Informationen" from the desktop style, as XenForo blocks (forumla.js) */
+.fa-info { order: 1; padding: 0 0 10px; background: var(--bg); }
+.fa-info-block {
+  margin: 0 0 12px; background: var(--card); border-top: 1px solid var(--border-top); border-bottom: 1px solid var(--border-bottom);
+}
+.fa-info-title {
+  padding: 6px 10px; font-size: 17px; line-height: 1.4; color: var(--link);
+  background: linear-gradient(0deg, var(--cat-a), var(--cat-b)); border-bottom: 1px solid var(--sep);
+}
+.fa-info-body { padding: 8px 10px 10px; font-size: 13.5px; line-height: 1.5; color: var(--text); overflow-wrap: anywhere; }
+.fa-info-body p, .fa-info-body div { margin: 0 0 6px !important; padding: 0 !important; background: transparent !important; border: 0 !important; }
+.fa-info-body p:last-child, .fa-info-body div:last-child { margin-bottom: 0 !important; }
+.fa-info-body hr { border: 0; border-top: 1px solid var(--sep); margin: 8px 0; }
+.fa-info-body a { color: var(--link) !important; }
+.fa-info-body a span[style*="color"] { font-weight: 600; } /* user group colors stay (team, moderators) */
+.fa-info-body strong, .fa-info-body b { font-weight: 600; }
+.fa-info-body img { width: 18px !important; height: 18px !important; border-radius: 50%; object-fit: cover; vertical-align: -4px; margin-right: 3px; }
+.fa-info-body ol, .fa-info-body ul { list-style: none; margin: 0 !important; padding: 0 !important; }
+.fa-info-body ol.commalist li, .fa-info-body ul.commalist li { display: inline; }
+/* statistics: XenForo "pairs--justified" rows */
+.fa-info-body dl { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; margin: 0 0 6px !important; }
+.fa-info-body dt { color: var(--muted); font-weight: 400; margin: 0; }
+.fa-info-body dd { margin: 0; text-align: right; font-weight: 600; }
+
+#footer, [data-role=footer] { order: 2; }
+
+/* YouTube preview cards (forumla.js replaces the iframes; hide them until then) */
+iframe[src*="youtube.com/embed"], iframe[src*="youtube-nocookie.com/embed"] { display: none !important; }
+a.fa-yt {
+  display: flex !important; align-items: center; gap: 10px; max-width: 360px; margin: 6px 0; padding: 6px;
+  background: var(--quote-bg); border: 1px solid var(--sep); border-radius: 4px; color: var(--text) !important;
+  text-decoration: none !important; vertical-align: top;
+}
+a.fa-yt:active { background: var(--userbg); }
+.fa-yt-thumb { position: relative; flex: 0 0 128px; height: 72px; border-radius: 3px; overflow: hidden; background: #000; }
+.fa-yt-thumb img { width: 100% !important; height: 100% !important; max-width: none !important; object-fit: cover; border-radius: 0 !important; display: block; }
+.fa-yt-play {
+  position: absolute; inset: 0; margin: auto; width: 34px; height: 24px; border-radius: 6px; background: rgba(255, 0, 0, .9);
+}
+.fa-yt-play::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 0; height: 0; transform: translateX(1px);
+  border-style: solid; border-width: 6px 0 6px 10px; border-color: transparent transparent transparent #fff;
+}
+.fa-yt-meta { min-width: 0; display: flex; flex-direction: column; gap: 2px; line-height: 1.3; }
+.fa-yt-title {
+  font-size: 14px; font-weight: 600; color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.fa-yt-author { font-size: 12px; color: var(--muted); }
+a.fa-yt + br { display: none; } /* the card is a block: the line break after it would add an empty line */
+.fa-yt-author::before { content: "▶ "; color: #f00; font-size: 10px; }
+
+/* quick reply under a private message */
+form[action*="do=insertpm"] > h3.ui-bar { margin-bottom: 8px !important; }
+.fa-fullreply { display: block; text-align: right; font-size: 13px; margin: -4px 0 10px; }
+
+/* ---------- footer (XenForo p-footer) ---------- */
+[data-role=footer], .ui-footer, #footer {
+  background: var(--footer) !important; background-image: none !important; border: 0 !important; color: var(--footer-text) !important;
+  font-size: 13px !important; padding: 10px 10px 20px !important; text-align: center; margin-top: 10px !important;
+}
+[data-role=footer] a, #footer a { color: var(--footer-text) !important; }
+.ui-bar-d { background: transparent !important; background-image: none !important; border: 0 !important; color: var(--muted) !important; }
+
+/* ---------- jQuery Mobile loader ---------- */
+.ui-loader { background: var(--card) !important; border-radius: 4px !important; opacity: .95 !important; }
+.ui-loader h1 { color: var(--text) !important; }
+
+/* ---------- ads ---------- */
+#FORUMLA_M_TOP, [id^="FORUMLA_"], ins.adsbygoogle, iframe[src*="doubleclick"], iframe[id^="google_ads"],
+div[id^="div-gpt-ad"], div[id^="google_ads"], .adsbygoogle, iframe[src*="googlesyndication"] {
+  display: none !important;
+}
+#nointelliTXT, div:has(> #FORUMLA_M_TOP) { display: none !important; }
+ol#posts > li.postbit:not([id]) { display: none !important; } /* in-feed "Anzeige" pseudo posts */
+
+/* ---------- off-canvas menu (forumla.js, XenForo offCanvasMenu look) ---------- */
+#fa-menu { position: fixed; inset: 0; z-index: 2000; visibility: hidden; transition: visibility 0s .25s; }
+.fa-menu-open #fa-menu { visibility: visible; transition: none; }
+.fa-menu-open, .fa-menu-open body { overflow: hidden !important; }
+.fa-menu-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, .25); opacity: 0; transition: opacity .25s; }
+.fa-menu-open .fa-menu-backdrop { opacity: 1; }
+.fa-menu-panel {
+  position: absolute; top: 0; bottom: 0; left: 0; width: min(280px, 85vw); overflow-y: auto; overscroll-behavior: contain;
+  background: var(--card); color: var(--text); transform: translateX(-100%); transition: transform .25s ease;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Roboto, sans-serif; font-size: 15px;
+}
+.fa-menu-open .fa-menu-panel { transform: none; box-shadow: 0 0 25px rgba(0, 0, 0, .3) !important; }
+.fa-menu-header {
+  display: flex; align-items: center; justify-content: space-between; height: 50px; padding: 0 4px 0 12px;
+  background: var(--header); color: #fff; font-size: 17px; position: sticky; top: 0; z-index: 1;
+}
+.fa-menu-close { width: 40px; height: 40px; border: 0; border-radius: 4px; background: transparent; color: var(--header-text); display: flex; align-items: center; justify-content: center; }
+.fa-menu-close svg { width: 22px; height: 22px; }
+.fa-menu-account { display: flex; gap: 8px; padding: 10px; border-bottom: 1px solid var(--sep); }
+.fa-menu-btn {
+  flex: 1; text-align: center; padding: 7px 10px; border-radius: 4px; font-size: 14px;
+  background: linear-gradient(0deg, var(--pn-a), var(--pn-b)); border: 1px solid var(--border); color: var(--btn2-text) !important;
+}
+.fa-menu-btn--primary { background: var(--btn); border-color: var(--btn-border); color: var(--btn-text) !important; }
+.fa-menu-search { padding: 10px; border-bottom: 1px solid var(--sep); }
+.fa-menu-search:empty { display: none; }
+.fa-menu-search input[type=search] {
+  width: 100% !important; box-sizing: border-box; margin: 0 !important; padding: 7px 8px 7px 32px !important;
+  background: var(--input-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238c8c8c' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5 21 21'/%3E%3C/svg%3E") 9px center / 16px no-repeat !important;
+}
+.fa-menu-list { list-style: none; margin: 0; padding: 0 0 20px; }
+.fa-menu-list li + li { border-top: 1px solid var(--sep); }
+.fa-menu-link {
+  display: flex !important; align-items: center; gap: 12px; padding: 11px 12px; color: var(--text) !important; font-size: 15px;
+}
+.fa-menu-link:active { background: var(--userbg); }
+.fa-menu-link.is-selected { box-shadow: inset 3px 0 0 var(--orange) !important; font-weight: 700; }
+.fa-menu-icon { width: 20px; height: 20px; color: var(--link); flex: 0 0 auto; }
+.fa-menu-icon svg { width: 100%; height: 100%; display: block; }
+.fa-menu-label { flex: 1; }
+.fa-menu-badge {
+  min-width: 18px; padding: 0 5px; border-radius: 9px; background: #e03030; color: #fff; font-size: 11px; font-weight: 700;
+  line-height: 18px; text-align: center;
+}
+
+/* ---------- image viewer (forumla.js) ---------- */
+#fa-viewer {
+  position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,.92);
+  display: flex; align-items: center; justify-content: center; touch-action: pinch-zoom;
+}
+#fa-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
